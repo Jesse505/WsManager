@@ -1,13 +1,29 @@
 # WsManager
 
-A library that simplifies the use of OkHttp Websocket.
-
-For more information, please see:
+基于okhttp封装的websocket操作库
 
 
 ## How to use
 
-Instantiate a WsManager object:
+Maven:
+
+```xml
+<dependency>
+  <groupId>com.okhttp.wsmanager</groupId>
+  <artifactId>wsmanager</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
+```
+
+or Gradle:
+
+```groovy
+compile 'com.okhttp.wsmanager:wsmanager:1.0.0'
+```
+
+
+创建一个WsManager实例:
 
 ```
 OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
@@ -16,18 +32,21 @@ OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                       .build();
 WsManager wsManager = new WsManager.Builder(this)
                 .wsUrl("ws://localhost:2333/")
-                .needReconnect(true)
+                .needReconnect(true)  //是否需要重连
                 .client(okHttpClient)
+                .setHeaders(null)    //设置请求头
+                .setReconnnectInterval(10*1000)  //设置重连步长(ms)
+                .setReconnnectIMaxTime(120*1000) //设置重连最大时长
                 .build();
 ```
 
-Establish a connection with the server:
+建立连接:
 
 ```
 wsManager.startConnect();
 ```
 
-Listens for server connection status:
+监听服务端的连接状态以及消息的回调:
 
 ```
 wsManager.setWsStatusListener(new WsStatusListener() {
@@ -68,14 +87,14 @@ wsManager.setWsStatusListener(new WsStatusListener() {
         });
 ```
 
-Send message to the server:
+发送消息给服务端:
 
 ```
 //String msg or ByteString byteString
 wsManager.sendMessage();
 ```
 
-Close the connection to the server:
+关闭服务端的连接:
 
 ```
 wsManager.stopConnect();
