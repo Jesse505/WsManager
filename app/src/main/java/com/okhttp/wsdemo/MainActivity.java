@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         //调起浏览器更新app
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
-        Uri url = Uri.parse("https://github.com/Rabtman/WsManager");
+        Uri url = Uri.parse("https://github.com/Jesse505/WsManager");
         intent.setData(url);
         startActivity(intent);
         break;
