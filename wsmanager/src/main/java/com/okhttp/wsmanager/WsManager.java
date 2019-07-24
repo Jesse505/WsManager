@@ -189,7 +189,6 @@ public class WsManager implements IWsManager {
                         .build();
             }
         }
-        mOkHttpClient.dispatcher().cancelAll();
         try {
             mLock.lockInterruptibly();
             try {
@@ -273,9 +272,6 @@ public class WsManager implements IWsManager {
             return;
         }
         cancelReconnect();
-        if (mOkHttpClient != null) {
-            mOkHttpClient.dispatcher().cancelAll();
-        }
         if (mWebSocket != null) {
             boolean isClosed = mWebSocket.close(WsStatus.CODE.NORMAL_CLOSE, WsStatus.TIP.NORMAL_CLOSE);
             //非正常关闭连接
